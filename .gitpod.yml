@@ -1,0 +1,23 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Drupal start
+    init: |
+      lando start
+      lando composer install
+      lando drush si -y --account-pass=admin --site-name='gitpod_lando' demo_umami
+      gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[1]" | sed -e 's#http://localhost:\(\)#\1#'))
+
+vscode:
+  extensions:
+    - felixfbecker.php-debug
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - stylelint.vscode-stylelint
+    - tombonnike.vscode-status-bar-format-toggle
+    - usernamehw.errorlens
+    - whatwedo.twig
+    - marcostazi.vs-code-drupal
